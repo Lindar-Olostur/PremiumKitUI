@@ -83,14 +83,13 @@ public struct TextBuilder: View {
 }
 
 
-public struct UtilityService {  // Изменили имя структуры
+import Foundation
+import ApphudSDK
+
+public struct UtilityService {
     public init() {}
     
     public func someUtilityMethod() -> String {
         return "Метод библиотеки работает!"
-    }
-    
-    @MainActor public func initializeApphud(apiKey: String) {
-        Apphud.start(apiKey: apiKey)
     }
 }
