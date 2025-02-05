@@ -15,9 +15,9 @@ public extension SKProduct {
     }
 }
 
-public class ProductsBuy {
-    @MainActor public static let shared = ProductsBuy()
-    public init() {}
+public struct ProductsBuy {
+//    @MainActor public static let shared = ProductsBuy()
+//    public init() {}
     
     public var subscriptions: [AppProduct] = []
     
@@ -87,5 +87,6 @@ public struct UtilityHelper {
     public static func showMessage() {
         print("Hello from UtilityHelper!")
     }
+    public var ler = "Lol"
 }
 #endif
