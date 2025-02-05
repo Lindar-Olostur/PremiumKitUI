@@ -81,3 +81,17 @@ public struct TextBuilder: View {
         t.multilineTextAlignment(a)
     }
 }
+
+
+public struct UtilityHelper {
+    public init() {} // Публичный инициализатор обязателен!
+    
+    public func someUtilityMethod() -> String {
+        return "Метод библиотеки работает!"
+    }
+    
+    // Пример метода с ApphudSDK
+    @MainActor public func initializeApphud(apiKey: String) {
+        Apphud.start(apiKey: apiKey)
+    }
+}
