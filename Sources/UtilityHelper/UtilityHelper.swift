@@ -83,13 +83,8 @@ public struct TextBuilder: View {
 }
 
 
-import Foundation
-import ApphudSDK
-
-public struct UtilityService {
-    public init() {}
-    
-    public func someUtilityMethod() -> String {
-        return "Метод библиотеки работает!"
+public struct UtilityHelper {
+    public static func showMessage() {
+        print("Hello from UtilityHelper!")
     }
 }
