@@ -5,7 +5,7 @@ import ApphudSDK
 import StoreKit
 import Foundation
 import SwiftUICore
-
+#if os(iOS)
 public extension SKProduct {
     var localizedPrice: String {
         let formatter = NumberFormatter()
@@ -88,3 +88,4 @@ public struct UtilityHelper {
         print("Hello from UtilityHelper!")
     }
 }
+#endif
