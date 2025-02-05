@@ -6,7 +6,7 @@ import StoreKit
 import Foundation
 import SwiftUICore
 
-extension SKProduct {
+public extension SKProduct {
     var localizedPrice: String {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
@@ -17,7 +17,7 @@ extension SKProduct {
 
 public class ProductsBuy {
     @MainActor public static let shared = ProductsBuy()
-    private init() {}
+    public init() {}
     
     public var subscriptions: [AppProduct] = []
     
