@@ -6,25 +6,20 @@ import StoreKit
 import Foundation
 import SwiftUICore
 
-public extension SKProduct {
-    var localizedPrice: String {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .currency
-        formatter.locale = priceLocale
-        return formatter.string(from: price)!
+#if os(iOS)
+public struct UtilityHelper {
+    public static func showMessage() {
+        print("Hello from UtilityHelper!")
     }
-}
-
-public class ProductsBuy {
-    @MainActor public static let shared = ProductsBuy()
-    public init() {}
     
-    public var subscriptions: [AppProduct] = []
+    public static let ler = "Lol"
+    
+    @MainActor public static var subscriptions: [AppProduct] = []
     
     public enum Products: String {
         case year, week, error
     }
-
+    
     public struct AppProduct: Identifiable {
         public let id = UUID()
         public let item: ApphudProduct
@@ -44,52 +39,59 @@ public class ProductsBuy {
             self.price = item.skProduct?.localizedPrice ?? "$0"
         }
     }
-}
-
-public struct TextBuilder: View {
-    public let string: String
-    public var size: CGFloat = 16
-    public var fontName: String = ""
-    public var weight: Font.Weight = .regular
-    public var color: Color = .black
-    public var opacity: Double = 1.0
-    public var alignment: TextAlignment = .leading
     
-    public var body: some View {
-        getAlign(
-            t: getColor(
-                t: getWeight(
-                    t: getFontNSize(
-                        t: string,
-                        s: size,
-                        f: fontName),
-                    w: weight),
-                c: color,
-                o: opacity),
-            a: alignment)
+    public struct TextBuilder: View {
+        let string: String
+        var size: CGFloat = 16
+        var fontName: String = ""
+        var weight: Font.Weight = .regular
+        var color: Color = .black
+        var opacity: Double = 1.0
+        var alignment: TextAlignment = .center
+        var underlined: Bool = false
+        var strikethrough: Bool = false
+        
+        public var body: some View {
+            Text(string)
+                .font(.custom(fontName, size: size).weight(weight))
+                .foregroundStyle(color.opacity(opacity))
+                .multilineTextAlignment(alignment)
+                .underline(underlined)
+                .strikethrough(strikethrough)
+        }
     }
-    private func getFontNSize(t: String, s: CGFloat = 16, f: String) -> Text {
-        Text(t).font(.custom(f, size: s))
-    }
-    private func getWeight(t: Text, w: Font.Weight = .regular) -> Text {
-        t.fontWeight(w)
-    }
-    private func getColor(t: Text, c: Color, o: Double) -> Text {
-        t.foregroundColor(c.opacity(o))
-    }
-    private func getAlign(t: Text, a: TextAlignment) -> some View {
-        t.multilineTextAlignment(a)
+    
+    public struct BigButton<Content: View>: View {
+        var height: CGFloat = 52
+        var color: Color = .white
+        var corners: CGFloat = 0
+        let action: () -> Void
+        let label: Content
+        
+        public init(action: @escaping () -> Void, label: () -> Content) {
+                self.action = action
+                self.label = label()
+            }
+        
+        public var body: some View {
+            label
+                .frame(maxWidth: .infinity, maxHeight: height)
+                .background(color)
+                .cornerRadius(corners)
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    action()
+                }
+        }
     }
 }
+#endif
 
-
-import Foundation
-import ApphudSDK
-
-public struct UtilityService {
-    public init() {}
-    
-    public func someUtilityMethod() -> String {
-        return "Метод библиотеки работает!"
+public extension SKProduct {
+    var localizedPrice: String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        formatter.locale = priceLocale
+        return formatter.string(from: price)!
     }
 }
