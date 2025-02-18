@@ -5,22 +5,22 @@ import ApphudSDK
 import StoreKit
 import Foundation
 import SwiftUICore
-#if os(iOS)
 
+#if os(iOS)
 public struct UtilityHelper {
     public static func showMessage() {
         print("Hello from UtilityHelper!")
     }
-
-    public static let ler = "Lol" // Добавляем public
-
-    @State public var subscriptions: [AppProduct] = [] // Добавляем public
-
-    public enum Products: String { // Добавляем public
+    
+    public static let ler = "Lol"
+    
+    @MainActor public static var subscriptions: [AppProduct] = []
+    
+    public enum Products: String {
         case year, week, error
     }
-
-    public struct AppProduct: Identifiable { // Добавляем public
+    
+    public struct AppProduct: Identifiable {
         public let id = UUID()
         public let item: ApphudProduct
         public let type: Products
