@@ -44,15 +44,19 @@ public struct UtilityHelper {
         let count: Int
         let active: Int
         var activeColor: Color
-        var inactiveColor: Color = .blue
-        var size: CGFloat = 8
-        var width: CGFloat = 0
-        var spacing: CGFloat = 8
+        var inactiveColor: Color
+        var size: CGFloat
+        var width: CGFloat
+        var spacing: CGFloat
         
-        public init(count: Int, active: Int, activeColor: Color) {
+        public init(count: Int, active: Int, activeColor: Color, inactiveColor: Color = .blue, size: CGFloat = 8, width: CGFloat = 0, spacing: CGFloat = 8) {
             self.count = count
             self.active = active
             self.activeColor = activeColor
+            self.inactiveColor = inactiveColor
+            self.size = size
+            self.width = width
+            self.spacing = spacing
         }
         
         public var body: some View {
@@ -68,18 +72,25 @@ public struct UtilityHelper {
     
     public struct TextBuilder: View {
         let string: String
-        var size: CGFloat = 16
-        var fontName: String = ""
-        var weight: Font.Weight = .regular
-        var color: Color = .black
-        var opacity: Double = 1.0
-        var alignment: TextAlignment = .center
-        var underlined: Bool = false
-        var strikethrough: Bool = false
+        var size: CGFloat
+        var fontName: String
+        var weight: Font.Weight
+        var color: Color
+        var opacity: Double
+        var alignment: TextAlignment
+        var underlined: Bool
+        var strikethrough: Bool
         
-        public init(string: String, size: CGFloat) {
+        public init(string: String, size: CGFloat = 16, fontName: String = "", weight: Font.Weight = .regular, color: Color = .black, opacity: Double = 1.0, alignment: TextAlignment = .center, underlined: Bool = false, strikethrough: Bool = false) {
             self.string = string
             self.size = size
+            self.fontName = fontName
+            self.weight = weight
+            self.color = color
+            self.opacity = opacity
+            self.alignment = alignment
+            self.underlined = underlined
+            self.strikethrough = strikethrough
         }
         
         public var body: some View {
@@ -99,7 +110,10 @@ public struct UtilityHelper {
         let action: () -> Void
         let label: Content
         
-        public init(action: @escaping () -> Void, label: () -> Content) {
+        public init(height: CGFloat = 52, color: Color = .white, corners: CGFloat = 0, action: @escaping () -> Void, label: () -> Content) {
+            self.height = height
+            self.color = color
+            self.corners = corners
             self.action = action
             self.label = label()
         }
