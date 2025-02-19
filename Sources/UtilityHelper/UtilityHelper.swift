@@ -106,6 +106,37 @@ public struct UtilityHelper {
         }
     }
     
+    public struct XmarkButton: View {
+        var size: CGFloat
+        var weight: Font.Weight
+        var color: Color
+        var opacity: Double
+        var alignment: Alignment
+        var padding: CGFloat
+        let action: () -> Void
+        
+        public init(size: CGFloat = 20, weight: Font.Weight = .regular, color: Color = .white, opacity: Double = 0.5, alignment: Alignment = .trailing, padding: CGFloat = 16, action: @escaping () -> Void) {
+            self.size = size
+            self.weight = weight
+            self.color = color
+            self.opacity = opacity
+            self.alignment = alignment
+            self.padding = padding
+            self.action = action
+        }
+        
+        public var body: some View {
+            Image(systemName: "xmark")
+                .font(.system(size: size, weight: weight))
+                .foregroundStyle(color.opacity(opacity))
+                .frame(maxWidth: .infinity, alignment: alignment)
+                .padding(padding)
+                .onTapGesture {
+                    action()
+                }
+        }
+    }
+    
     public struct BigButton<Content: View>: View {
         var width: CGFloat
         var height: CGFloat
@@ -135,6 +166,103 @@ public struct UtilityHelper {
                 .onTapGesture {
                     action()
                 }
+        }
+    }
+    
+//    public struct ToggleButton<Content: View>: View {
+//        var width: CGFloat
+//        var height: CGFloat
+//        var color: Color
+//        var corners: CGFloat
+//        var padding: CGFloat
+//        var opacity: CGFloat
+//        var shadowColor: Color
+//        var shadowOpacity: CGFloat
+//        var shadowRadius: CGFloat
+//        var strokeColor: Color
+//        var strokeOpacity: CGFloat
+//        var strokeWidth: CGFloat
+//        let action: () -> Void
+//        let label: Content
+//        
+//        public init(width: CGFloat = .infinity, height: CGFloat = 52, color: Color = .white, corners: CGFloat = 0, padding: CGFloat = 0, opacity: CGFloat = 0, shadowColor: Color = .clear, shadowOpacity: CGFloat = 0.0, shadowRadius: CGFloat = 0, strokeColor: Color = .clear, strokeOpacity: CGFloat = 0,  strokeWidth: CGFloat = 0, action: @escaping () -> Void, label: () -> Content) {
+//            self.width = width
+//            self.height = height
+//            self.color = color
+//            self.corners = corners
+//            self.padding = padding
+//            self.opacity = opacity
+//            self.shadowColor = shadowColor
+//            self.shadowOpacity = shadowOpacity
+//            self.shadowRadius = shadowRadius
+//            self.strokeColor = strokeColor
+//            self.strokeOpacity = strokeOpacity
+//            self.strokeWidth = strokeWidth
+//            self.action = action
+//            self.label = label()
+//        }
+//        
+//        public var body: some View {
+//            label
+//                .frame(maxWidth: width, maxHeight: height)
+//                .background(color)
+//                .cornerRadius(corners)
+//                .shadow(color: shadowColor.opacity(shadowOpacity), radius: shadowRadius, x: 0, y: 0)
+//                .overlay(
+//                    RoundedRectangle(cornerRadius: corners)
+//                        .inset(by: 0.5)
+//                        .stroke(strokeColor.opacity(strokeOpacity), lineWidth: strokeWidth)
+//                )
+//                .opacity(opacity)
+//                .padding(padding)
+//                .onTapGesture {
+//                    action()
+//                }
+//        }
+//    }
+    
+    public struct PayWallFooter: View {
+        let termsOfUsePath: String
+        let restoreCompletion: () -> Void
+        let privacyPolicyPath: String
+        
+        public init(termsOfUsePath: String, restoreCompletion: @escaping () -> Void, privacyPolicyPath: String) {
+            self.termsOfUsePath = termsOfUsePath
+            self.restoreCompletion = restoreCompletion
+            self.privacyPolicyPath = privacyPolicyPath
+        }
+        
+        public var body: some View {
+            HStack {
+                Text("Terms of Use")
+                    .onTapGesture {
+                        openURL(termsOfUsePath)
+                    }
+                Spacer()
+                Text("Restore")
+                    .onTapGesture {
+                        Apphud.restorePurchases { subscriptions, purchases, error in
+                            if Apphud.hasActiveSubscription() {
+                                restoreCompletion()
+                            }
+                        }
+                    }
+                Spacer()
+                Text("Privacy Policy")
+                    .onTapGesture {
+                        openURL(privacyPolicyPath)
+                    }
+            }
+            .font(.caption)
+            .foregroundStyle(.gray)
+            .underline()
+            .padding()
+        }
+        
+        @MainActor public func openURL(_ path: String) {
+            if let url = URL(string: "path") {
+                UIApplication.shared.open(url)
+            }
         }
     }
 }
