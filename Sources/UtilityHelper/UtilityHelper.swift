@@ -80,8 +80,9 @@ public struct UtilityHelper {
         var alignment: TextAlignment
         var underlined: Bool
         var strikethrough: Bool
+        var kerning: CGFloat
         
-        public init(string: String, size: CGFloat = 16, fontName: String = "", weight: Font.Weight = .regular, color: Color = .black, opacity: Double = 1.0, alignment: TextAlignment = .center, underlined: Bool = false, strikethrough: Bool = false) {
+        public init(string: String, size: CGFloat = 16, fontName: String = "", weight: Font.Weight = .regular, color: Color = .black, opacity: Double = 1.0, alignment: TextAlignment = .center, underlined: Bool = false, strikethrough: Bool = false, kerning: CGFloat = 0) {
             self.string = string
             self.size = size
             self.fontName = fontName
@@ -91,6 +92,7 @@ public struct UtilityHelper {
             self.alignment = alignment
             self.underlined = underlined
             self.strikethrough = strikethrough
+            self.kerning = kerning
         }
         
         public var body: some View {
@@ -100,17 +102,20 @@ public struct UtilityHelper {
                 .multilineTextAlignment(alignment)
                 .underline(underlined)
                 .strikethrough(strikethrough)
+                .kerning(kerning)
         }
     }
     
     public struct BigButton<Content: View>: View {
-        var height: CGFloat = 52
-        var color: Color = .white
-        var corners: CGFloat = 0
+        var width: CGFloat
+        var height: CGFloat
+        var color: Color
+        var corners: CGFloat
         let action: () -> Void
         let label: Content
         
-        public init(height: CGFloat = 52, color: Color = .white, corners: CGFloat = 0, action: @escaping () -> Void, label: () -> Content) {
+        public init(width: CGFloat = .infinity, height: CGFloat = 52, color: Color = .white, corners: CGFloat = 0, action: @escaping () -> Void, label: () -> Content) {
+            self.width = width
             self.height = height
             self.color = color
             self.corners = corners
