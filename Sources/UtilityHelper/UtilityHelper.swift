@@ -40,6 +40,32 @@ public struct UtilityHelper {
         }
     }
     
+    public struct PageIndicator: View {
+        let count: Int
+        let active: Int
+        var activeColor: Color
+        var inactiveColor: Color = .blue
+        var size: CGFloat = 8
+        var width: CGFloat = 0
+        var spacing: CGFloat = 8
+        
+        public init(count: Int, active: Int, activeColor: Color) {
+            self.count = count
+            self.active = active
+            self.activeColor = activeColor
+        }
+        
+        public var body: some View {
+            HStack(spacing: spacing) {
+                ForEach(0...count-1, id: \.self) { i in
+                    Capsule()
+                        .frame(width: i == active-1 ? size+width : size, height: size)
+                        .foregroundStyle(i == active-1 ? activeColor : inactiveColor)
+                }
+            }
+        }
+    }
+    
     public struct TextBuilder: View {
         let string: String
         var size: CGFloat = 16
@@ -51,16 +77,9 @@ public struct UtilityHelper {
         var underlined: Bool = false
         var strikethrough: Bool = false
         
-        public init(string: String, size: CGFloat, fontName: String, weight: Font.Weight, color: Color, opacity: Double, alignment: TextAlignment, underlined: Bool, strikethrough: Bool) {
+        public init(string: String, size: CGFloat) {
             self.string = string
             self.size = size
-            self.fontName = fontName
-            self.weight = weight
-            self.color = color
-            self.opacity = opacity
-            self.alignment = alignment
-            self.underlined = underlined
-            self.strikethrough = strikethrough
         }
         
         public var body: some View {
@@ -80,10 +99,7 @@ public struct UtilityHelper {
         let action: () -> Void
         let label: Content
         
-        public init(height: CGFloat, color: Color, corners: CGFloat, action: @escaping () -> Void, label: () -> Content) {
-            self.height = height
-            self.color = color
-            self.corners = corners
+        public init(action: @escaping () -> Void, label: () -> Content) {
             self.action = action
             self.label = label()
         }
@@ -110,3 +126,4 @@ public extension SKProduct {
         return formatter.string(from: price)!
     }
 }
+
