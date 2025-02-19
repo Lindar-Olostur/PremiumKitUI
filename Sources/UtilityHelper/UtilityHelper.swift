@@ -111,24 +111,27 @@ public struct UtilityHelper {
         var height: CGFloat
         var color: Color
         var corners: CGFloat
+        var padding: CGFloat
         let action: () -> Void
         let label: Content
         
-        public init(width: CGFloat = .infinity, height: CGFloat = 52, color: Color = .white, corners: CGFloat = 0, action: @escaping () -> Void, label: () -> Content) {
+        public init(width: CGFloat = .infinity, height: CGFloat = 52, color: Color = .white, corners: CGFloat = 0, padding: CGFloat = 0, action: @escaping () -> Void, label: () -> Content) {
             self.width = width
             self.height = height
             self.color = color
             self.corners = corners
+            self.padding = padding
             self.action = action
             self.label = label()
         }
         
         public var body: some View {
             label
-                .frame(maxWidth: .infinity, maxHeight: height)
+                .frame(maxWidth: width, maxHeight: height)
                 .background(color)
                 .cornerRadius(corners)
                 .contentShape(Rectangle())
+                .padding(padding)
                 .onTapGesture {
                     action()
                 }
