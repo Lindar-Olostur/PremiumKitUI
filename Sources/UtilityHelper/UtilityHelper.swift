@@ -169,6 +169,20 @@ public struct UtilityHelper {
         }
     }
     
+    public func customImage(name: String, contentMode: ContentMode = .fit, width: CGFloat = .infinity, height: CGFloat = .infinity, corners: CGFloat = 0, alignment: Alignment = .center) -> some View {
+        Image(name)
+            .resizable()
+            .aspectRatio(contentMode: contentMode)
+            .frame(maxWidth: width, maxHeight: height, alignment: alignment)
+            .cornerRadius(corners)
+    }
+    
+    public func systemImage(name: String, size: CGFloat = 16, color: Color = .black, weight: Font.Weight = .regular) -> some View {
+        Image(systemName: name)
+            .font(.system(size: size).weight(weight))
+            .foregroundStyle(color)
+    }
+    
 //    public struct ToggleButton<Content: View>: View {
 //        var width: CGFloat
 //        var height: CGFloat
@@ -184,7 +198,7 @@ public struct UtilityHelper {
 //        var strokeWidth: CGFloat
 //        let action: () -> Void
 //        let label: Content
-//        
+//
 //        public init(width: CGFloat = .infinity, height: CGFloat = 52, color: Color = .white, corners: CGFloat = 0, padding: CGFloat = 0, opacity: CGFloat = 0, shadowColor: Color = .clear, shadowOpacity: CGFloat = 0.0, shadowRadius: CGFloat = 0, strokeColor: Color = .clear, strokeOpacity: CGFloat = 0,  strokeWidth: CGFloat = 0, action: @escaping () -> Void, label: () -> Content) {
 //            self.width = width
 //            self.height = height
@@ -201,7 +215,7 @@ public struct UtilityHelper {
 //            self.action = action
 //            self.label = label()
 //        }
-//        
+//
 //        public var body: some View {
 //            label
 //                .frame(maxWidth: width, maxHeight: height)
@@ -223,13 +237,13 @@ public struct UtilityHelper {
     
     public struct PayWallFooter: View {
         let termsOfUsePath: String
-        let restoreCompletion: () -> Void
         let privacyPolicyPath: String
+        let restoreCompletion: () -> Void
         
-        public init(termsOfUsePath: String, restoreCompletion: @escaping () -> Void, privacyPolicyPath: String) {
+        public init(termsOfUsePath: String, privacyPolicyPath: String, restoreCompletion: @escaping () -> Void) {
             self.termsOfUsePath = termsOfUsePath
-            self.restoreCompletion = restoreCompletion
             self.privacyPolicyPath = privacyPolicyPath
+            self.restoreCompletion = restoreCompletion
         }
         
         public var body: some View {
