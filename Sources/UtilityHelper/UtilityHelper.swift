@@ -169,7 +169,7 @@ public struct UtilityHelper {
         }
     }
     
-    public func customImage(name: String, contentMode: ContentMode = .fit, width: CGFloat = .infinity, height: CGFloat = .infinity, corners: CGFloat = 0, alignment: Alignment = .center) -> some View {
+    public static func customImage(name: String, contentMode: ContentMode = .fit, width: CGFloat = .infinity, height: CGFloat = .infinity, corners: CGFloat = 0, alignment: Alignment = .center) -> some View {
         Image(name)
             .resizable()
             .aspectRatio(contentMode: contentMode)
@@ -177,7 +177,7 @@ public struct UtilityHelper {
             .cornerRadius(corners)
     }
     
-    public func systemImage(name: String, size: CGFloat = 16, color: Color = .black, weight: Font.Weight = .regular) -> some View {
+    public static func systemImage(name: String, size: CGFloat = 16, color: Color = .black, weight: Font.Weight = .regular) -> some View {
         Image(systemName: name)
             .font(.system(size: size).weight(weight))
             .foregroundStyle(color)
