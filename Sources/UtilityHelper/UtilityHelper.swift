@@ -8,16 +8,26 @@ import SwiftUICore
 
 #if os(iOS)
 public struct UtilityHelper {
-    public static func showMessage() {
-        print("Hello from UtilityHelper!")
-    }
     
-    public static let ler = "Lol"
-    
+//MARK: - Products
     @MainActor public static var subscriptions: [AppProduct] = []
     
     public enum Products: String {
         case year, week, error
+    }
+    
+    @MainActor public static func loadSubscriptions(key: String, json: @escaping ([String : Any]) -> Void, completion: @escaping () -> ()) async {
+        Apphud.start(apiKey: key)
+        if let placement = await Apphud.placement("Placement"),
+           let paywall = placement.paywall {
+            if let data = paywall.json {
+                json(data)
+            }
+            for item in paywall.products {
+                subscriptions.append(AppProduct(item: item))
+            }
+            completion()
+        }
     }
     
     public struct AppProduct: Identifiable {
@@ -40,6 +50,7 @@ public struct UtilityHelper {
         }
     }
     
+//MARK: - UI
     public struct PageIndicator: View {
         let count: Int
         let active: Int
