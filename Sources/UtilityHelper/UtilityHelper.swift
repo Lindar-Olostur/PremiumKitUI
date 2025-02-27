@@ -16,6 +16,10 @@ public struct UtilityHelper {
         case year, week, error
     }
     
+    @MainActor public static func getProduct(type: Products) -> AppProduct? {
+        return subscriptions.first { $0.type == type }
+    }
+    
     @MainActor public static func loadSubscriptions(key: String, json: @escaping ([String : Any]) -> Void, completion: @escaping () -> ()) async {
         Apphud.start(apiKey: key)
         if let placement = await Apphud.placement("Placement"),
