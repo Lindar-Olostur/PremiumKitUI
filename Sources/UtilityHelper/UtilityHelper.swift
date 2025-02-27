@@ -50,6 +50,19 @@ public struct UtilityHelper {
         }
     }
     
+    @MainActor public static func getWeeklyPrise(_ s: String) -> String {
+        guard !s.isEmpty else { return "" }
+        let firstCharacter = String(s.first!)
+        let cleanedString = String(s.dropFirst())
+        
+        guard let number = Double(cleanedString) else { return "" }
+        
+        let result = number / 52
+        let formattedResult = String(format: "%.2f", result)
+        
+        return "\(firstCharacter)\(formattedResult)"
+    }
+    
 //MARK: - UI
     public struct PageIndicator: View {
         let count: Int
