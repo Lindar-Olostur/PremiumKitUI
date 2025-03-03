@@ -109,8 +109,9 @@ public struct UtilityHelper {
         var underlined: Bool
         var strikethrough: Bool
         var kerning: CGFloat
+        var trunication: Text.TruncationMode
         
-        public init(string: String, size: CGFloat = 16, fontName: String = "", weight: Font.Weight = .regular, color: Color = .black, opacity: Double = 1.0, alignment: TextAlignment = .center, underlined: Bool = false, strikethrough: Bool = false, kerning: CGFloat = 0) {
+        public init(string: String, size: CGFloat = 16, fontName: String = "", weight: Font.Weight = .regular, color: Color = .black, opacity: Double = 1.0, alignment: TextAlignment = .center, underlined: Bool = false, strikethrough: Bool = false, kerning: CGFloat = 0, trunication: Text.TruncationMode = .tail) {
             self.string = string
             self.size = size
             self.fontName = fontName
@@ -121,6 +122,7 @@ public struct UtilityHelper {
             self.underlined = underlined
             self.strikethrough = strikethrough
             self.kerning = kerning
+            self.trunication = trunication
         }
         
         public var body: some View {
@@ -131,10 +133,12 @@ public struct UtilityHelper {
                 .underline(underlined)
                 .strikethrough(strikethrough)
                 .kerning(kerning)
+                .truncationMode(trunication)
         }
     }
     
-    public struct XmarkButton: View {
+    public struct SystemImageButton: View {
+        var name: String
         var size: CGFloat
         var weight: Font.Weight
         var color: Color
@@ -143,7 +147,8 @@ public struct UtilityHelper {
         var padding: CGFloat
         let action: () -> Void
         
-        public init(size: CGFloat = 20, weight: Font.Weight = .regular, color: Color = .white, opacity: Double = 0.5, alignment: Alignment = .trailing, padding: CGFloat = 16, action: @escaping () -> Void) {
+        public init(name: String = "xmark", size: CGFloat = 20, weight: Font.Weight = .regular, color: Color = .white, opacity: Double = 0.5, alignment: Alignment = .trailing, padding: CGFloat = 16, action: @escaping () -> Void) {
+            self.name = name
             self.size = size
             self.weight = weight
             self.color = color
@@ -154,7 +159,7 @@ public struct UtilityHelper {
         }
         
         public var body: some View {
-            Image(systemName: "xmark")
+            Image(systemName: name)
                 .font(.system(size: size, weight: weight))
                 .foregroundStyle(color.opacity(opacity))
                 .frame(maxWidth: .infinity, alignment: alignment)
