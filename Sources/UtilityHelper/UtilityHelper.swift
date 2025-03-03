@@ -109,8 +109,9 @@ public struct UtilityHelper {
         var underlined: Bool
         var strikethrough: Bool
         var kerning: CGFloat
+        var trunication: Text.TruncationMode
         
-        public init(string: String, size: CGFloat = 16, fontName: String = "", weight: Font.Weight = .regular, color: Color = .black, opacity: Double = 1.0, alignment: TextAlignment = .center, underlined: Bool = false, strikethrough: Bool = false, kerning: CGFloat = 0) {
+        public init(string: String, size: CGFloat = 16, fontName: String = "", weight: Font.Weight = .regular, color: Color = .black, opacity: Double = 1.0, alignment: TextAlignment = .center, underlined: Bool = false, strikethrough: Bool = false, kerning: CGFloat = 0, trunication: Text.TruncationMode = .tail) {
             self.string = string
             self.size = size
             self.fontName = fontName
@@ -121,6 +122,7 @@ public struct UtilityHelper {
             self.underlined = underlined
             self.strikethrough = strikethrough
             self.kerning = kerning
+            self.trunication = trunication
         }
         
         public var body: some View {
@@ -131,6 +133,7 @@ public struct UtilityHelper {
                 .underline(underlined)
                 .strikethrough(strikethrough)
                 .kerning(kerning)
+                .truncationMode(trunication)
         }
     }
     
