@@ -103,7 +103,7 @@ public struct UtilityHelper {
         let color: Color
         let text: [String]
         
-        init(image: String, color: Color, text: [String]) {
+        public init(image: String, color: Color, text: [String]) {
             self.image = image
             self.color = color
             self.text = text
