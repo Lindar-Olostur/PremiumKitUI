@@ -98,6 +98,31 @@ public struct UtilityHelper {
         }
     }
     
+    public struct PromoList: View {
+        let image: String
+        let color: Color
+        let text: [String]
+        
+        init(image: String, color: Color, text: [String]) {
+            self.image = image
+            self.color = color
+            self.text = text
+        }
+        
+        public var body: some View {
+            VStack {
+                ForEach(text, id: \.self) { element in
+                    HStack {
+                        Image(systemName: image)
+                            .font(.system(size: 13))
+                            .foregroundStyle(color)
+                        TextBuilder(string: element, size: 15, fontName: "Poppins-Regular", color: .black)
+                    }
+                }
+            }
+        }
+    }
+    
     public struct TextBuilder: View {
         let string: String
         var size: CGFloat
