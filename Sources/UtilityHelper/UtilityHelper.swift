@@ -110,7 +110,7 @@ public struct UtilityHelper {
         }
         
         public var body: some View {
-            VStack {
+            VStack(alignment: .leading) {
                 ForEach(text, id: \.self) { element in
                     HStack {
                         Image(systemName: image)
