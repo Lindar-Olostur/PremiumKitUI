@@ -100,13 +100,15 @@ public struct UtilityHelper {
     
     public struct PromoList: View {
         let image: String
-        let color: Color
+        let imageColor: Color
         let text: [String]
+        let textColor: Color
         
-        public init(image: String, color: Color, text: [String]) {
+        public init(image: String, imageColor: Color, text: [String], textColor: Color) {
             self.image = image
-            self.color = color
+            self.imageColor = imageColor
             self.text = text
+            self.textColor = textColor
         }
         
         public var body: some View {
@@ -115,8 +117,8 @@ public struct UtilityHelper {
                     HStack {
                         Image(systemName: image)
                             .font(.system(size: 13))
-                            .foregroundStyle(color)
-                        TextBuilder(string: element, size: 15, fontName: "Poppins-Regular", color: .black)
+                            .foregroundStyle(imageColor)
+                        TextBuilder(string: element, size: 15, fontName: "Poppins-Regular", color: textColor)
                     }
                 }
             }
