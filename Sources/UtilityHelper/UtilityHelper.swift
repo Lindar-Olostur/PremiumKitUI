@@ -105,24 +105,26 @@ public struct UtilityHelper {
         let text: [String]
         let textColor: Color
         let textSize: CGFloat
+        let spacing: CGFloat
         
-        public init(image: String, imageColor: Color, imageSize: CGFloat, text: [String], textColor: Color, textSize: CGFloat) {
+        public init(image: String, imageColor: Color, imageSize: CGFloat, text: [String], textColor: Color, textSize: CGFloat, spacing: CGFloat) {
             self.image = image
             self.imageColor = imageColor
             self.imageSize = imageSize
             self.text = text
             self.textColor = textColor
             self.textSize = textSize
+            self.spacing = spacing
         }
         
         public var body: some View {
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: spacing) {
                 ForEach(text, id: \.self) { element in
                     HStack {
                         Image(systemName: image)
-                            .font(.system(size: textSize))
+                            .font(.system(size: imageSize))
                             .foregroundStyle(imageColor)
-                        TextBuilder(string: element, size: imageSize, fontName: "Poppins-Regular", color: textColor)
+                        TextBuilder(string: element, size: textSize, fontName: "Poppins-Regular", color: textColor)
                     }
                 }
             }
