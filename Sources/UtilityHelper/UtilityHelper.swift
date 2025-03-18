@@ -302,12 +302,14 @@ public struct UtilityHelper {
 //    }
     
     public struct PayWallFooter: View {
+        var isUnderlined: Bool
         let color: Color
         let termsOfUsePath: String
         let privacyPolicyPath: String
         let restoreCompletion: () -> Void
         
-        public init(color: Color = .gray, termsOfUsePath: String, privacyPolicyPath: String, restoreCompletion: @escaping () -> Void) {
+        public init(isUnderlined: Bool = true, color: Color = .gray, termsOfUsePath: String, privacyPolicyPath: String, restoreCompletion: @escaping () -> Void) {
+            self.isUnderlined = isUnderlined
             self.color = color
             self.termsOfUsePath = termsOfUsePath
             self.privacyPolicyPath = privacyPolicyPath
@@ -337,7 +339,7 @@ public struct UtilityHelper {
             }
             .font(.caption)
             .foregroundStyle(color)
-            .underline()
+            .underline(isUnderlined)
             .padding()
         }
         
