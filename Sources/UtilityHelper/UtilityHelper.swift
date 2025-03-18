@@ -307,7 +307,7 @@ public struct UtilityHelper {
         }
         
         @MainActor public func openURL(_ path: String) {
-            if let url = URL(string: "path") {
+            if let url = URL(string: path) {
                 UIApplication.shared.open(url)
             }
         }
