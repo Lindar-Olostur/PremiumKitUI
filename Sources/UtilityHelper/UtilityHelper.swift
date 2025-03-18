@@ -342,10 +342,11 @@ public struct UtilityHelper {
             .underline(isUnderlined)
             .padding()
         }
-    }
-    @MainActor public func openURL(_ path: String) {
-        if let url = URL(string: "path") {
-            UIApplication.shared.open(url)
+        
+        @MainActor public func openURL(_ path: String) {
+            if let url = URL(string: path) {
+                UIApplication.shared.open(url)
+            }
         }
     }
 }
