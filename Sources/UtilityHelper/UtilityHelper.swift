@@ -249,57 +249,44 @@ public struct UtilityHelper {
             .foregroundStyle(color)
     }
     
-//    public struct ToggleButton<Content: View>: View {
-//        var width: CGFloat
-//        var height: CGFloat
-//        var color: Color
-//        var corners: CGFloat
-//        var padding: CGFloat
-//        var opacity: CGFloat
-//        var shadowColor: Color
-//        var shadowOpacity: CGFloat
-//        var shadowRadius: CGFloat
-//        var strokeColor: Color
-//        var strokeOpacity: CGFloat
-//        var strokeWidth: CGFloat
-//        let action: () -> Void
-//        let label: Content
-//
-//        public init(width: CGFloat = .infinity, height: CGFloat = 52, color: Color = .white, corners: CGFloat = 0, padding: CGFloat = 0, opacity: CGFloat = 0, shadowColor: Color = .clear, shadowOpacity: CGFloat = 0.0, shadowRadius: CGFloat = 0, strokeColor: Color = .clear, strokeOpacity: CGFloat = 0,  strokeWidth: CGFloat = 0, action: @escaping () -> Void, label: () -> Content) {
-//            self.width = width
-//            self.height = height
-//            self.color = color
-//            self.corners = corners
-//            self.padding = padding
-//            self.opacity = opacity
-//            self.shadowColor = shadowColor
-//            self.shadowOpacity = shadowOpacity
-//            self.shadowRadius = shadowRadius
-//            self.strokeColor = strokeColor
-//            self.strokeOpacity = strokeOpacity
-//            self.strokeWidth = strokeWidth
-//            self.action = action
-//            self.label = label()
-//        }
-//
-//        public var body: some View {
-//            label
-//                .frame(maxWidth: width, maxHeight: height)
-//                .background(color)
-//                .cornerRadius(corners)
-//                .shadow(color: shadowColor.opacity(shadowOpacity), radius: shadowRadius, x: 0, y: 0)
-//                .overlay(
-//                    RoundedRectangle(cornerRadius: corners)
-//                        .inset(by: 0.5)
-//                        .stroke(strokeColor.opacity(strokeOpacity), lineWidth: strokeWidth)
-//                )
-//                .opacity(opacity)
-//                .padding(padding)
-//                .onTapGesture {
-//                    action()
-//                }
-//        }
-//    }
+    public struct PurchasesToggle: View {
+        @Binding var toggle: Bool
+        let tintColor: Color
+        let bgColor: Color
+        let textColor: Color
+        let text: String
+        let fontName: String
+        let size: CGFloat
+        let corners: CGFloat
+        var height: CGFloat
+        var width: CGFloat
+        
+        public init(toggle: Binding<Bool>, tintColor: Color = .black, bgColor: Color = .white.opacity(0.95), textColor: Color = .black, text: String, fontName: String, size: CGFloat = 13, corners: CGFloat = 16, height: CGFloat = 40, width: CGFloat = .infinity) {
+            self._toggle = toggle
+            self.tintColor = tintColor
+            self.bgColor = bgColor
+            self.textColor = textColor
+            self.text = text
+            self.fontName = fontName
+            self.size = size
+            self.corners = corners
+            self.height = height
+            self.width = width
+        }
+        
+        public var body: some View {
+            HStack {
+                TextBuilder(string: text, size: size, fontName: fontName, color: textColor)
+                Toggle("", isOn: $toggle)
+                    .labelsHidden()
+                    .scaleEffect(0.6)
+                    .tint(tintColor)
+            }
+            .frame(maxWidth: width, maxHeight: height)
+            .background(bgColor)
+            .cornerRadius(corners)
+        }
+    }
     
     public struct PayWallFooter: View {
         var isUnderlined: Bool
