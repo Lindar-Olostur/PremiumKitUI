@@ -4,7 +4,7 @@
 import ApphudSDK
 import StoreKit
 import Foundation
-import SwiftUICore
+import SwiftUI
 
 #if os(iOS)
 public struct UtilityHelper {
