@@ -342,6 +342,8 @@ public struct UtilityHelper {
         var screen: Screen = .splash
         var onCompleted: Bool = UserDefaults.standard.bool(forKey: "d12d2")
         
+        public init() {}
+        
         public func splashFinished() {
             if onCompleted {
                 if Apphud.hasPremiumAccess() {
