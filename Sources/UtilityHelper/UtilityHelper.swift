@@ -338,8 +338,8 @@ public struct UtilityHelper {
     }
     
 //MARK: - Navigation
-    public class Navigation {
-        public var screen: Screen = .splash
+    public class Navigation: ObservableObject {
+        @Published public var screen: Screen = .splash
         var onCompleted: Bool = UserDefaults.standard.bool(forKey: "d12d2")
         
         public init() {}
