@@ -336,6 +336,47 @@ public struct UtilityHelper {
             }
         }
     }
+    
+//MARK: - Navigation
+    public class Navigation {
+        var screen: Screen = .splash
+        var onCompleted: Bool = UserDefaults.standard.bool(forKey: "d12d2")
+        
+        public func splashFinished() {
+            if onCompleted {
+                if Apphud.hasPremiumAccess() {
+                    withAnimation { screen = .main }
+                } else {
+                    withAnimation { screen = .paywall }
+                }
+            } else {
+                withAnimation { screen = .onboarding }
+            }
+        }
+        
+        public func skipOnboarding() {
+            if Apphud.hasPremiumAccess() {
+                withAnimation { screen = .main }
+            } else {
+                withAnimation { screen = .paywall }
+            }
+        }
+        
+        public func onboardingFinished() {
+            onCompleted = true
+            UserDefaults.standard.set(true, forKey: "d12d2")
+            if Apphud.hasPremiumAccess() {
+                withAnimation { screen = .main }
+            } else {
+                withAnimation { screen = .paywall }
+            }
+        }
+
+    }
+
+    public enum Screen: Hashable {
+        case splash, onboarding, paywall, main
+    }
 }
 #endif
 
