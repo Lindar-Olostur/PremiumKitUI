@@ -338,8 +338,8 @@ public struct UtilityHelper {
     }
     
 //MARK: - Navigation
-    public struct Navigation/*: ObservableObject*/ {
-        @State public var screen: Screen = .splash
+    public class Navigation: ObservableObject {
+        @Published public var screen: Screen = .splash
         var onCompleted: Bool = UserDefaults.standard.bool(forKey: "d12d2")
         
         public init() {}
@@ -364,7 +364,7 @@ public struct UtilityHelper {
             }
         }
         
-        public mutating func onboardingFinished() {
+        public func onboardingFinished() {
             onCompleted = true
             UserDefaults.standard.set(true, forKey: "d12d2")
             if Apphud.hasPremiumAccess() {
