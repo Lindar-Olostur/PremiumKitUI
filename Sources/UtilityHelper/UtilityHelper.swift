@@ -345,6 +345,7 @@ public struct UtilityHelper {
         public init() {}
         
         public func splashFinished() {
+            print("splashFinished")
             if onCompleted {
                 if Apphud.hasPremiumAccess() {
                     withAnimation { screen = .main }
@@ -354,6 +355,7 @@ public struct UtilityHelper {
             } else {
                 withAnimation { screen = .onboarding }
             }
+            print(screen)
         }
         
         public func skipOnboarding() {
