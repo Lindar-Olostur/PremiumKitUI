@@ -345,7 +345,6 @@ public struct UtilityHelper {
         public init() {}
         
         public func splashFinished() {
-            print("splashFinished")
             if onCompleted {
                 if Apphud.hasPremiumAccess() {
                     withAnimation { screen = .main }
@@ -355,7 +354,6 @@ public struct UtilityHelper {
             } else {
                 withAnimation { screen = .onboarding }
             }
-            print(screen)
         }
         
         public func skipOnboarding() {
@@ -378,7 +376,7 @@ public struct UtilityHelper {
 
     }
 
-    public enum Screen: Hashable {
+    public enum Screen: Equatable {
         case splash, onboarding, paywall, main
     }
 }
