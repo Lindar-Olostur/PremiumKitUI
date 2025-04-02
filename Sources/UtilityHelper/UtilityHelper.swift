@@ -13,7 +13,10 @@ public struct UtilityHelper {
     @MainActor public static var subscriptions: [AppProduct] = []
     
     public enum Products: String {
-        case year, week, error
+        case year  = "year"
+        case halfYear = "half year"
+        case week = "week"
+        case error = "error"
     }
     
     @MainActor public static func getProduct(type: Products) -> AppProduct? {
@@ -47,6 +50,8 @@ public struct UtilityHelper {
                     return .year
                 } else if item.productId.contains("week") {
                     return .week
+                } else if item.productId.contains("half") || item.productId.contains("6")  {
+                    return .halfYear
                 }
                 return .error
             }()
