@@ -342,6 +342,22 @@ public struct UtilityHelper {
         }
     }
     
+    @MainActor public func askReview() {
+        if let scene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene {
+            SKStoreReviewController.requestReview(in: scene)
+        }
+    }
+    
+    @MainActor public func shareAppLink(_ path: String) {
+        guard let url = URL(string: "https://apple.com") else { return }
+        
+        let activityController = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+           let rootViewController = windowScene.windows.first?.rootViewController {
+            rootViewController.present(activityController, animated: true, completion: nil)
+        }
+    }
+    
 //MARK: - Navigation
     public class Navigation: ObservableObject {
         @Published public var screen: Screen = .splash
