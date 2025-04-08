@@ -405,6 +405,10 @@ public struct UtilityHelper {
     public struct ImagePicker: UIViewControllerRepresentable {
         @Binding public var image: UIImage?
         @Environment(\.presentationMode) public var presentationMode
+        
+        public init(image: Binding<UIImage?>) {
+            self._image = image
+        }
 
         public func makeUIViewController(context: Context) -> UIImagePickerController {
             let picker = UIImagePickerController()
