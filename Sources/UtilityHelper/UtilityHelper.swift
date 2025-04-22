@@ -15,6 +15,7 @@ public struct UtilityHelper {
     public enum Products: String {
         case year  = "year"
         case halfYear = "half year"
+        case month = "month"
         case week = "week"
         case error = "error"
     }
@@ -342,22 +343,6 @@ public struct UtilityHelper {
         }
     }
     
-    @MainActor public func askReview() {
-        if let scene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene {
-            SKStoreReviewController.requestReview(in: scene)
-        }
-    }
-    
-    @MainActor public func shareAppLink(_ path: String) {
-        guard let url = URL(string: "https://apple.com") else { return }
-        
-        let activityController = UIActivityViewController(activityItems: [url], applicationActivities: nil)
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-           let rootViewController = windowScene.windows.first?.rootViewController {
-            rootViewController.present(activityController, animated: true, completion: nil)
-        }
-    }
-    
 //MARK: - Navigation
     public class Navigation: ObservableObject {
         @Published public var screen: Screen = .splash
@@ -399,48 +384,6 @@ public struct UtilityHelper {
 
     public enum Screen: Equatable {
         case splash, onboarding, paywall, main
-    }
-    
-    //MARK: - camera
-    public struct ImagePicker: UIViewControllerRepresentable {
-        @Binding public var image: UIImage?
-        @Environment(\.presentationMode) public var presentationMode
-        
-        public init(image: Binding<UIImage?>) {
-            self._image = image
-        }
-
-        public func makeUIViewController(context: Context) -> UIImagePickerController {
-            let picker = UIImagePickerController()
-            picker.delegate = context.coordinator
-            picker.sourceType = .camera  // Используем камеру
-            return picker
-        }
-
-        public func updateUIViewController(_ uiViewController: UIImagePickerController, context: Context) {}
-
-        public func makeCoordinator() -> Coordinator {
-            Coordinator(self)
-        }
-
-        public class Coordinator: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-            let parent: ImagePicker
-
-            public init(_ parent: ImagePicker) {
-                self.parent = parent
-            }
-
-            public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-                if let image = info[.originalImage] as? UIImage {
-                    parent.image = image
-                }
-                parent.presentationMode.wrappedValue.dismiss()
-            }
-
-            public func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-                parent.presentationMode.wrappedValue.dismiss()
-            }
-        }
     }
 }
 #endif
