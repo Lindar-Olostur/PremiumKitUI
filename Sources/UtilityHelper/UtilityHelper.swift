@@ -15,8 +15,8 @@ public struct UtilityHelper {
     public enum Products: String {
         case year  = "year"
         case halfYear = "half year"
-        case month = "month"
         case week = "week"
+        case month = "month"
         case error = "error"
     }
     
