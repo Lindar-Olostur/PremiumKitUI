@@ -4,21 +4,24 @@
 import PackageDescription
 
 let package = Package(
-    name: "UtilityHelper",
+    name: "PremiumKitUI",
     platforms: [.iOS(.v16)],
     products: [
         .library(
-            name: "UtilityHelper",
-            targets: ["UtilityHelper"]),
+            name: "PremiumKitUI",
+            targets: ["PremiumKitUI"]),
     ],
     dependencies: [
         .package(url: "https://github.com/apphud/ApphudSDK", "3.5.9"..<"4.0.0")
     ],
     targets: [
         .target(
-            name: "UtilityHelper",
+            name: "PremiumKitUI",
             dependencies: [
                 .product(name: "ApphudSDK", package: "ApphudSDK")
             ]),
+//        .testTarget(
+//            name: "PremiumKitUITests",
+//            dependencies: ["UtilityHelper"]),
     ]
 )

@@ -1,13 +1,13 @@
 // The Swift Programming Language
 // https://docs.swift.org/swift-book
 
-import ApphudSDK
-import StoreKit
-import Foundation
-import SwiftUI
-
-#if os(iOS)
-public struct UtilityHelper {
+//import ApphudSDK
+//import StoreKit
+//import Foundation
+//import SwiftUI
+//
+//#if os(iOS)
+//public struct UtilityHelper {
     
 //MARK: - Products
 //    @MainActor public static var subscriptions: [AppProduct] = []
@@ -344,56 +344,56 @@ public struct UtilityHelper {
 //    }
     
 //MARK: - Navigation
-    public class Navigation: ObservableObject {
-        @Published public var screen: Screen = .splash
-        var onCompleted: Bool = UserDefaults.standard.bool(forKey: "d12d2")
-        
-        public init() {}
-        
-        public func splashFinished() {
-            if onCompleted {
-                if Apphud.hasPremiumAccess() {
-                    withAnimation { screen = .main }
-                } else {
-                    withAnimation { screen = .paywall }
-                }
-            } else {
-                withAnimation { screen = .onboarding }
-            }
-        }
-        
-        public func skipOnboarding() {
-            if Apphud.hasPremiumAccess() {
-                withAnimation { screen = .main }
-            } else {
-                withAnimation { screen = .paywall }
-            }
-        }
-        
-        public func onboardingFinished() {
-            onCompleted = true
-            UserDefaults.standard.set(true, forKey: "d12d2")
-            if Apphud.hasPremiumAccess() {
-                withAnimation { screen = .main }
-            } else {
-                withAnimation { screen = .paywall }
-            }
-        }
-
-    }
-
-    public enum Screen: Equatable {
-        case splash, onboarding, paywall, main
-    }
-}
-#endif
-
-public extension SKProduct {
-    var localizedPrice: String {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .currency
-        formatter.locale = priceLocale
-        return formatter.string(from: price)!
-    }
-}
+//    public class Navigation: ObservableObject {
+//        @Published public var screen: Screen = .splash
+//        var onCompleted: Bool = UserDefaults.standard.bool(forKey: "d12d2")
+//        
+//        public init() {}
+//        
+//        public func splashFinished() {
+//            if onCompleted {
+//                if Apphud.hasPremiumAccess() {
+//                    withAnimation { screen = .main }
+//                } else {
+//                    withAnimation { screen = .paywall }
+//                }
+//            } else {
+//                withAnimation { screen = .onboarding }
+//            }
+//        }
+//        
+//        public func skipOnboarding() {
+//            if Apphud.hasPremiumAccess() {
+//                withAnimation { screen = .main }
+//            } else {
+//                withAnimation { screen = .paywall }
+//            }
+//        }
+//        
+//        public func onboardingFinished() {
+//            onCompleted = true
+//            UserDefaults.standard.set(true, forKey: "d12d2")
+//            if Apphud.hasPremiumAccess() {
+//                withAnimation { screen = .main }
+//            } else {
+//                withAnimation { screen = .paywall }
+//            }
+//        }
+//
+//    }
+//
+//    public enum Screen: Equatable {
+//        case splash, onboarding, paywall, main
+//    }
+//}
+//#endif
+//
+//public extension SKProduct {
+//    var localizedPrice: String {
+//        let formatter = NumberFormatter()
+//        formatter.numberStyle = .currency
+//        formatter.locale = priceLocale
+//        return formatter.string(from: price)!
+//    }
+//}
 

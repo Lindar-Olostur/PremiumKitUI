@@ -1,8 +1,5 @@
-//
-//  File.swift
-//  UtilityHelper
-//
-//  Created by Lindar Olostur on 26.05.2025.
-//
-
-import Foundation
+public enum PremiumKitUI {
+    public enum UI {}
+    public enum Subscription {}
+    public enum Navigation {}
+}
