@@ -1,80 +1,8 @@
-// The Swift Programming Language
-// https://docs.swift.org/swift-book
-
-import ApphudSDK
-import StoreKit
-import Foundation
 import SwiftUI
+import ApphudSDK
 
-#if os(iOS)
-public struct UtilityHelper {
-    
-//MARK: - Products
-    @MainActor public static var subscriptions: [AppProduct] = []
-    
-    public enum Products: String {
-        case year  = "year"
-        case halfYear = "half year"
-        case week = "week"
-        case month = "month"
-        case error = "error"
-    }
-    
-    @MainActor public static func getProduct(type: Products) -> AppProduct? {
-        return subscriptions.first { $0.type == type }
-    }
-    
-    @MainActor public static func loadSubscriptions(key: String, json: @escaping ([String : Any]) -> Void, completion: @escaping () -> ()) async {
-        Apphud.start(apiKey: key)
-        if let placement = await Apphud.placement("Placement"),
-           let paywall = placement.paywall {
-            if let data = paywall.json {
-                json(data)
-            }
-            for item in paywall.products {
-                subscriptions.append(AppProduct(item: item))
-            }
-            completion()
-        }
-    }
-    
-    public struct AppProduct: Identifiable {
-        public let id = UUID()
-        public let item: ApphudProduct
-        public let type: Products
-        public let price: String
-        
-        public init(item: ApphudProduct) {
-            self.item = item
-            self.type = {
-                if item.productId.contains("year") || item.productId.contains("annual") {
-                    return .year
-                } else if item.productId.contains("week") {
-                    return .week
-                } else if item.productId.contains("half") || item.productId.contains("6")  {
-                    return .halfYear
-                }
-                return .error
-            }()
-            self.price = item.skProduct?.localizedPrice ?? "$0"
-        }
-    }
-    
-    @MainActor public static func getWeeklyPrise(_ s: String) -> String {
-        guard !s.isEmpty else { return "" }
-        let firstCharacter = String(s.first!)
-        let cleanedString = String(s.dropFirst())
-        
-        guard let number = Double(cleanedString) else { return "" }
-        
-        let result = number / 52
-        let formattedResult = String(format: "%.2f", result)
-        
-        return "\(firstCharacter)\(formattedResult)"
-    }
-    
-//MARK: - UI
-    public struct PageIndicator: View {
+public extension PremiumKitUI.UI {
+    struct PageIndicator: View {
         let count: Int
         let active: Int
         var activeColor: Color
@@ -104,7 +32,7 @@ public struct UtilityHelper {
         }
     }
     
-    public struct PromoList: View {
+    struct PromoList: View {
         let image: String
         let imageColor: Color
         let imageSize: CGFloat
@@ -137,7 +65,7 @@ public struct UtilityHelper {
         }
     }
     
-    public struct TextBuilder: View {
+    struct TextBuilder: View {
         let string: String
         var size: CGFloat
         var fontName: String
@@ -176,7 +104,7 @@ public struct UtilityHelper {
         }
     }
     
-    public struct SystemImageButton: View {
+    struct SystemImageButton: View {
         var name: String
         var size: CGFloat
         var weight: Font.Weight
@@ -209,7 +137,7 @@ public struct UtilityHelper {
         }
     }
     
-    public struct BigButton<Content: View>: View {
+    struct BigButton<Content: View>: View {
         var width: CGFloat
         var height: CGFloat
         var color: Color
@@ -241,21 +169,21 @@ public struct UtilityHelper {
         }
     }
     
-    public static func customImage(name: String, contentMode: ContentMode = .fit, width: CGFloat = .infinity, height: CGFloat = .infinity, corners: CGFloat = 0, alignment: Alignment = .center) -> some View {
-        Image(name)
-            .resizable()
-            .aspectRatio(contentMode: contentMode)
-            .frame(maxWidth: width, maxHeight: height, alignment: alignment)
-            .cornerRadius(corners)
-    }
+    func customImage(name: String, contentMode: ContentMode = .fit, width: CGFloat = .infinity, height: CGFloat = .infinity, corners: CGFloat = 0, alignment: Alignment = .center) -> some View {
+    Image(name)
+        .resizable()
+        .aspectRatio(contentMode: contentMode)
+        .frame(maxWidth: width, maxHeight: height, alignment: alignment)
+        .cornerRadius(corners)
+}
     
-    public static func systemImage(name: String, size: CGFloat = 16, color: Color = .black, weight: Font.Weight = .regular) -> some View {
+    func systemImage(name: String, size: CGFloat = 16, color: Color = .black, weight: Font.Weight = .regular) -> some View {
         Image(systemName: name)
             .font(.system(size: size).weight(weight))
             .foregroundStyle(color)
     }
     
-    public struct PurchasesToggle: View {
+    struct PurchasesToggle: View {
         @Binding var toggle: Bool
         let tintColor: Color
         let bgColor: Color
@@ -294,7 +222,7 @@ public struct UtilityHelper {
         }
     }
     
-    public struct PayWallFooter: View {
+    struct PayWallFooter: View {
         var isUnderlined: Bool
         let color: Color
         let termsOfUsePath: String
@@ -342,58 +270,4 @@ public struct UtilityHelper {
             }
         }
     }
-    
-//MARK: - Navigation
-    public class Navigation: ObservableObject {
-        @Published public var screen: Screen = .splash
-        var onCompleted: Bool = UserDefaults.standard.bool(forKey: "d12d2")
-        
-        public init() {}
-        
-        public func splashFinished() {
-            if onCompleted {
-                if Apphud.hasPremiumAccess() {
-                    withAnimation { screen = .main }
-                } else {
-                    withAnimation { screen = .paywall }
-                }
-            } else {
-                withAnimation { screen = .onboarding }
-            }
-        }
-        
-        public func skipOnboarding() {
-            if Apphud.hasPremiumAccess() {
-                withAnimation { screen = .main }
-            } else {
-                withAnimation { screen = .paywall }
-            }
-        }
-        
-        public func onboardingFinished() {
-            onCompleted = true
-            UserDefaults.standard.set(true, forKey: "d12d2")
-            if Apphud.hasPremiumAccess() {
-                withAnimation { screen = .main }
-            } else {
-                withAnimation { screen = .paywall }
-            }
-        }
-
-    }
-
-    public enum Screen: Equatable {
-        case splash, onboarding, paywall, main
-    }
 }
-#endif
-
-public extension SKProduct {
-    var localizedPrice: String {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .currency
-        formatter.locale = priceLocale
-        return formatter.string(from: price)!
-    }
-}
-// e
