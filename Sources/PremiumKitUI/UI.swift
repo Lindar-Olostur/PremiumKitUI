@@ -215,6 +215,7 @@ public extension PremiumKitUI.UI {
                     .scaleEffect(scale)
                     .tint(tintColor)
             }
+            .padding(.horizontal)
             .frame(maxWidth: width, maxHeight: height)
             .background(bgColor)
             .cornerRadius(corners)
