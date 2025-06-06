@@ -5,7 +5,7 @@ import PackageDescription
 
 let package = Package(
     name: "PremiumKitUI",
-    platforms: [.iOS(.v16)],
+    platforms: [.iOS(.v15)],
     products: [
         .library(
             name: "PremiumKitUI",
@@ -20,8 +20,5 @@ let package = Package(
             dependencies: [
                 .product(name: "ApphudSDK", package: "ApphudSDK")
             ]),
-//        .testTarget(
-//            name: "PremiumKitUITests",
-//            dependencies: ["UtilityHelper"]),
     ]
 )
