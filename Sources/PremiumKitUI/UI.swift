@@ -93,14 +93,21 @@ public extension PremiumKitUI.UI {
         }
         
         public var body: some View {
-            Text(string)
-                .font(.custom(fontName, size: size).weight(weight))
-                .foregroundStyle(color.opacity(opacity))
-                .multilineTextAlignment(alignment)
-                .underline(underlined)
-                .strikethrough(strikethrough)
-                .kerning(kerning)
-                .truncationMode(trunication)
+            if #available(iOS 16.0, *) {
+                Text(string)
+                    .font(.custom(fontName, size: size).weight(weight))
+                    .foregroundStyle(color.opacity(opacity))
+                    .multilineTextAlignment(alignment)
+                    .underline(underlined)
+                    .strikethrough(strikethrough)
+                    .kerning(kerning)
+                    .truncationMode(trunication)
+            } else {
+                Text(string)
+                    .font(.custom(fontName, size: size).weight(weight))
+                    .foregroundStyle(color.opacity(opacity))
+                    .multilineTextAlignment(alignment)
+            }
         }
     }
     
@@ -238,30 +245,56 @@ public extension PremiumKitUI.UI {
         }
         
         public var body: some View {
-            HStack {
-                Text("Terms of Use")
-                    .onTapGesture {
-                        openURL(termsOfUsePath)
-                    }
-                Spacer()
-                Text("Restore")
-                    .onTapGesture {
-                        Apphud.restorePurchases { subscriptions, purchases, error in
-                            if Apphud.hasActiveSubscription() {
-                                restoreCompletion()
+            if #available(iOS 16.0, *) {
+                HStack {
+                    Text("Terms of Use")
+                        .onTapGesture {
+                            openURL(termsOfUsePath)
+                        }
+                    Spacer()
+                    Text("Restore")
+                        .onTapGesture {
+                            Apphud.restorePurchases { subscriptions, purchases, error in
+                                if Apphud.hasActiveSubscription() {
+                                    restoreCompletion()
+                                }
                             }
                         }
-                    }
-                Spacer()
-                Text("Privacy Policy")
-                    .onTapGesture {
-                        openURL(privacyPolicyPath)
-                    }
+                    Spacer()
+                    Text("Privacy Policy")
+                        .onTapGesture {
+                            openURL(privacyPolicyPath)
+                        }
+                }
+                .font(.caption)
+                .foregroundStyle(color)
+                .underline(isUnderlined)
+                .padding()
+            } else {
+                HStack {
+                    Text("Terms of Use")
+                        .onTapGesture {
+                            openURL(termsOfUsePath)
+                        }
+                    Spacer()
+                    Text("Restore")
+                        .onTapGesture {
+                            Apphud.restorePurchases { subscriptions, purchases, error in
+                                if Apphud.hasActiveSubscription() {
+                                    restoreCompletion()
+                                }
+                            }
+                        }
+                    Spacer()
+                    Text("Privacy Policy")
+                        .onTapGesture {
+                            openURL(privacyPolicyPath)
+                        }
+                }
+                .font(.caption)
+                .foregroundStyle(color)
+                .padding()
             }
-            .font(.caption)
-            .foregroundStyle(color)
-            .underline(isUnderlined)
-            .padding()
         }
         
         @MainActor public func openURL(_ path: String) {
