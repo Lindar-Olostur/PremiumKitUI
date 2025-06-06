@@ -183,6 +183,7 @@ public extension PremiumKitUI.UI {
         @Binding var toggle: Bool
         let tintColor: Color
         let bgColor: Color
+        let scale: CGFloat
         let textColor: Color
         let text: String
         let fontName: String
@@ -191,10 +192,11 @@ public extension PremiumKitUI.UI {
         var height: CGFloat
         var width: CGFloat
         
-        public init(toggle: Binding<Bool>, tintColor: Color = .black, bgColor: Color = .white.opacity(0.95), textColor: Color = .black, text: String, fontName: String, size: CGFloat = 13, corners: CGFloat = 16, height: CGFloat = 40, width: CGFloat = .infinity) {
+        public init(toggle: Binding<Bool>, tintColor: Color = .black, bgColor: Color = .white.opacity(0.95), scale: CGFloat = 0.6, textColor: Color = .black, text: String, fontName: String, size: CGFloat = 13, corners: CGFloat = 16, height: CGFloat = 40, width: CGFloat = .infinity) {
             self._toggle = toggle
             self.tintColor = tintColor
             self.bgColor = bgColor
+            self.scale = scale
             self.textColor = textColor
             self.text = text
             self.fontName = fontName
@@ -207,9 +209,10 @@ public extension PremiumKitUI.UI {
         public var body: some View {
             HStack {
                 TextBuilder(string: text, size: size, fontName: fontName, color: textColor)
+                Spacer()
                 Toggle("", isOn: $toggle)
                     .labelsHidden()
-                    .scaleEffect(0.6)
+                    .scaleEffect(scale)
                     .tint(tintColor)
             }
             .frame(maxWidth: width, maxHeight: height)
